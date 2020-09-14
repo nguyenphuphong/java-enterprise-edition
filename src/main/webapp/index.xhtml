@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+	
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:c="http://java.sun.com/jstl/core">
+
+<h:body>
+    
+<ui:composition template = "templates/common.xhtml">
+
+<ui:define name="content">
+    <div>
+        <h2>Welcome to SENIOR</h2>
+        <p><u>To manage course</u></p>
+        <p>
+            Courses are programs which are openned for all students can join and get their
+            knowledge, certificates. A normally course follow these rules:
+        </p>
+        <ul>
+            <li>Course only being created by teachers.</li>
+            <li>The course only can be edited by the teacher who created it.</li>
+            <li>Course can be advertised on many other shools</li>
+            <li>Student of any school can join for the course</li>
+            <li>Students are only able to see the opening course, can't see the on going, or closed course</li>
+            <li>Students can see all courses being created by any teacher.</li>
+        </ul>
+    </div>
+    <div>
+        <h2>Courses</h2>
+        <h:dataTable var="course" value="#{courseBean.getCourses()}" styleClass="table-with-border">
+            <h:column>    				
+                <f:facet name = "header">Title</f:facet>    				
+                <h:outputText value="#{course.title}" />
+            </h:column>
+
+            <h:column>
+                <f:facet name = "header">Description</f:facet>
+                <h:outputText value="#{course.description}" />
+            </h:column>
+        </h:dataTable>
+    </div>
+</ui:define>
+
+</ui:composition>
+
+</h:body>
+
+</html>
