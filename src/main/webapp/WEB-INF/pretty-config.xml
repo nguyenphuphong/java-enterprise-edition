@@ -13,4 +13,9 @@
         <pattern value="/teacher/home" />
         <view-id value="/index.xhtml" />
     </url-mapping>
+
+    <url-mapping>
+        <pattern value="/teacher/course" />
+        <view-id value="/course.xhtml" />
+    </url-mapping>
 </pretty-config>

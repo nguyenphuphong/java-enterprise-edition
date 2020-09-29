@@ -14,7 +14,7 @@
 <ui:define name="content">
     <div>
         <h2>Welcome to SENIOR</h2>
-        <p><u>To manage course</u></p>
+        <p><u>About Courses</u></p>
         <p>
             Courses are programs which are openned for all students can join and get their
             knowledge, certificates. A normally course follow these rules:
@@ -28,19 +28,53 @@
             <li>Students can see all courses being created by any teacher.</li>
         </ul>
     </div>
+    <h:panelGroup rendered="#{courseBean.isEdit()}">
+        <h2>Course</h2>
+        <p><u><h:outputText value="#{courseBean.selectedCourse.title}" /></u></p>
+        <h:outputText value="#{courseBean.selectedCourse.description}" escape="false" />
+    </h:panelGroup>
+    <h:panelGroup rendered="#{courseBean.isShowList()}">
+        <h2>List</h2>
+        <h:form>
+            <h:dataTable var="course" value="#{courseBean.getCourses()}" styleClass="table-with-border">
+                <h:column>
+                    <f:facet name = "header">Title</f:facet>    				
+                    <h:outputText value="#{course.title}" />
+                </h:column>
+                <h:column>
+                    <h:commandLink value="Edit" action="#{courseBean.select(course.id)}" />
+                </h:column>
+            </h:dataTable>
+        </h:form>
+    </h:panelGroup>
     <div>
-        <h2>Courses</h2>
-        <h:dataTable var="course" value="#{courseBean.getCourses()}" styleClass="table-with-border">
-            <h:column>    				
-                <f:facet name = "header">Title</f:facet>    				
-                <h:outputText value="#{course.title}" />
-            </h:column>
-
-            <h:column>
-                <f:facet name = "header">Description</f:facet>
-                <h:outputText value="#{course.description}" />
-            </h:column>
-        </h:dataTable>
+        <h2>
+            <h:outputText value="Edit" rendered="#{courseBean.isEdit()}" />
+            <h:outputText value="Create" rendered="#{courseBean.isCreate()}" />
+        </h2>
+        <h:form>
+            <h:inputHidden value = "#{courseBean.selectedCourse.id}" />
+            <table>
+                <tr>
+                    <td>title:</td>
+                    <td>
+                        <h:inputText value="#{courseBean.selectedCourse.title}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: text-top;">Description:</td>
+                    <td>
+                        <h:inputTextarea rows="20" cols="80" value="#{courseBean.selectedCourse.description}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h:commandButton value="Submit" action="#{courseBean.createOrUpdate}" />
+                    </td>
+                    <td><h:commandLink value="Reset" action="#{courseBean.reset}" /></td>
+                </tr>
+            </table>
+        </h:form>
     </div>
 </ui:define>
 

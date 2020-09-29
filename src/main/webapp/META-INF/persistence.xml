@@ -1,0 +1,17 @@
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd"
+        version="1.0">
+    <persistence-unit name="seniorPersistenceUnit">
+        <jta-data-source>seniorDataSource</jta-data-source>
+
+        <class>vn.kase.jee.jpa.entity.User</class>
+        <class>vn.kase.jee.jpa.entity.UserInfo</class>
+        <class>vn.kase.jee.jpa.entity.Role</class>
+        <class>vn.kase.jee.jpa.entity.Course</class>
+
+        <properties>
+            <property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema(ForeignKeys=true)"/>
+        </properties>
+    </persistence-unit>
+</persistence>

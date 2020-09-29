@@ -1,0 +1,21 @@
+Java Programming
+
+<p>
+Java, a wonderfully simple programming language that has encouraged many programmers to pursue
+careers involving Java over any other language. Of course, it goes without saying that Java is
+an excellent language, but do you know what is required of you to start programming Java?
+</p>
+<p>
+As with any programming language it is important you understand the fundamentals and that is
+exactly what I teach you in this course.
+</p>
+<p>
+I help you:
+</p>
+<ul>
+    <li>Install your IDE</li>
+    <li>Establish fundamental code</li>
+    <li>Create and use variables</li>
+    <li>Retrieve user input</li>
+    <li>Process simple data</li>
+</ul>

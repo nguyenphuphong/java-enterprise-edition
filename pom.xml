@@ -52,6 +52,7 @@
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <version>1.4.200</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
@@ -82,6 +83,20 @@
                         <tomee.serialization.class.whitelist>*</tomee.serialization.class.whitelist>
                         <tomee.serialization.class.blacklist>-</tomee.serialization.class.blacklist>
                     </systemVariables>
+                    <inlinedTomEEXml>
+                        <tomee>
+                            <Resource id="seniorDataSource" type="DataSource">
+                                JdbcDriver = org.h2.Driver
+                                JdbcUrl = jdbc:h2:tcp://localhost/./db/senior
+                                UserName = sa
+                                Password = 
+                                jtaManaged = true
+                            </Resource>
+                        </tomee>
+                    </inlinedTomEEXml>
+                    <libs>
+                        <lib>com.h2database:h2:1.4.200</lib>
+                    </libs>
                 </configuration>
             </plugin>
             <plugin>

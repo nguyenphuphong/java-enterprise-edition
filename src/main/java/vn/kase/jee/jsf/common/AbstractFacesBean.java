@@ -17,6 +17,11 @@ public abstract class AbstractFacesBean {
         context.getExternalContext().getSessionMap().put("SESSION", session);
     }
 
+    protected String getParameter(String name) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        return context.getExternalContext().getRequestParameterMap().get(name);
+    }
+
     protected void invalidateSession() {
         FacesContext context = FacesContext.getCurrentInstance();
         context.getExternalContext().invalidateSession();
