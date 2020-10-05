@@ -145,3 +145,52 @@ Bảng (tb_application_student) chứa thông tin đăng kí khối của học 
 
 Về phân quyền, tất cả các quyền tạo, chỉnh sữa, xóa thông tin tuyển sinh đều chỉ có thể được thực hiện bởi (warden) quản giáo.
 
+## Bài tập 3
+
+Trong bài tập này chúng ta sẻ làm quen với việc sử dụng EJB (Enterprise Java Beans).
+
+Tiếp tục với 2 bài tập trước, bài tập này sẻ cung cấp thêm tính năng cho hệ thống SENIOR. Hiện tại qua môn trước và tới bây giờ
+mỗi ứng dụng thường đơn lẽ, mỗi hệ thống cũng đơn lẽ, nhưng trên thực tế, việc một ứng dụng, hay hệ thống chỉ hoạt động đơn lẽ
+là rất hạn chế, vì thế nhu cầu rất lớn đặt vào tính liên kết của các ứng dụng và hệ thống với nhau.
+
+Trong bài tập này chúng ta sẻ kết nối ứng dụng JUNIOR với hệ thống SENIOR như sau. Chúng ta quay lại với nhu cầu tuyển sinh, và
+dự tuyển của học sinh với trường cấp 3. Chúng ta xây dựng được một cơ sở dữ liệu cho việc đưa thông tin tuyển dụng, lưu trữ
+những đơn dự tuyển của học sinh, nhưng chúng ta cần tạo một nơi mà học sinh có thể dự tuyển.
+
+Trước hết, yêu cầu đầu tiên của bài tập này là trên hệ thống SENIOR tạo ra một page cho phép student có thể dự tuyển vào
+bất kì khối nào mà SENIOR đang đăng tin tuyển sinh. Cho nên chúng ta cần có 1 page mới cho việc đó, gọi là (application-registration.xhtml)
+Trang này không có phân quyền, vì các bạn học sinh thường không phải là người của hệ thống SENIOR.
+
+Trang (application-registration.xhmtl) cho phép nhập các thông tin của học sinh:
+
+- (email): Địa chỉ email của học sinh, là duy nhất trong bảng.
+- (full_name): Họ và tên của học sinh
+- (dob): Ngày tháng năm sinh của học sinh
+- (address): Địa chỉ của học sinh
+- (school): Trường cấp 2 học sinh theo học
+- (mathematics): Điểm Toán của học sinh
+- (literature): Điểm Văn của học sinh
+- (enghlish): Điểm Tiếng Anh của học sinh
+- (physics): Điểm Lý của học sinh
+- (chemistry): Điểm Hóa của học sinh
+- (biological): Điểm Sinh của học sinh
+- (history): Điểm Sử của học sinh
+- (geography): Điểm Địa cuả học sinh
+
+Ngoài ra trên trang này, học sinh còn có thể chọn một danh sách các (application) mà SENIOR đang có. Qua đó học sinh dự tuyển có thể chọn
+các khối dự tuyển tương ứng. Chính về hệ thống không phân quyền của của trang này, nên hệ thống phải kiểm tra tính duy nhất của (email)
+để xác định xem học sinh này đã đăng kí dự tuyển hay chưa. Nếu đã đăng kí dự tuyển thì chúng ta sẻ hiễn thị lại các thông tin mà học sinh
+đó đã đăng kí. Qua đó học sinh này có thể chỉnh sữa lại thông tin đăng kí (trong bài tập này chúng ta không quan tâm tới vấn đề bảo mật
+thông tin dự tuyển của học sinh)
+
+Yêu cầu thứ hai của bài tập này là liên kết hệ thống JUNIOR với hệ thống SENIOR, theo đó học sinh đăng nhập vào hệ thống JUNIOR sẻ có thể
+trực tiếp nộp đơn dự tuyển vào hệ thống SENIOR từ ứng dụng JUNIOR. Việc này đòi hỏi chúng ta cần phải sử dụng EJB. Bên hệ thống SENIOR
+chúng ta cần expose 1 stateless EJB gọi là (ApplicationStatelessBean.java). Stateless Bean này cho phép học sinh đăng kí dự tuyển, thông tin
+đăng kí giống với những gì chúng ta làm với yêu cầu 1. Vì vậy, sẻ tốt nhất nếu hệ thống SENIOR sử dụng luôn EJB này cho tính năng thứ nhất.
+
+Bên hệ thống JUNIOR, chúng ta cần tạo ra một bảng điểm cho học sinh, sau khi học sinh đăng nhập vào hệ thống JUNIOR, sẻ có một đường dẫn mới,
+mỡ ra một trang hiễn thị các thông tin dự tuyển, trên trang này học sinh có thể chọn một danh sách các thông tin dự tuyển sau đó yêu cầu đăng
+kí này sẻ được hệ thống JUNIOR liên kết với hệ thống SENIOR để thực hiện. Sử dụng tính năng liên kết này, học sinh không cần phải nhập điểm
+môn học, tại vì cơ bản hệ thống JUNIOR đã quản lí điểm cho học sinh đó rồi, nên khi xử lý yêu cầu dự tuyển, hệ thống JUNIOR sẻ tự động chuyển
+tiếp bảng điểm của học sinh lên thông tin dự tuyển cho học sinh đấy.
+

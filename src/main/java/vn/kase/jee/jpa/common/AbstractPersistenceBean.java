@@ -1,4 +1,4 @@
-package vn.kase.jee.jsf.common;
+package vn.kase.jee.jpa.common;
 
 import java.util.List;
 import java.util.Map;
@@ -10,7 +10,7 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 
-public abstract class AbstractPersistenceBean extends AbstractFacesBean {
+public class AbstractPersistenceBean {
     @PersistenceContext(unitName = "seniorPersistenceUnit")
     protected EntityManager entityManager;
 
@@ -38,7 +38,25 @@ public abstract class AbstractPersistenceBean extends AbstractFacesBean {
         return query.getResultList();
     }
 
+    protected <E> List<E> findAll(Class<E> entity, String jpql, Object... parameters) {
+        TypedQuery<E> query = entityManager.createQuery(jpql, entity);
+
+        if (parameters != null) {
+            for (int i = 0; i < parameters.length; i++) {
+                query.setParameter(i + 1, parameters[i]);
+            }
+        }
+
+        return query.getResultList();
+    }
+
     protected <E> E findOne(Class<E> entity, String jpql, Map<String, Object> parameters) {
+        List<E> resultList = findAll(entity, jpql, parameters);
+
+        return resultList.isEmpty() ? null : resultList.get(0);
+    }
+
+    protected <E> E findOne(Class<E> entity, String jpql, Object... parameters) {
         List<E> resultList = findAll(entity, jpql, parameters);
 
         return resultList.isEmpty() ? null : resultList.get(0);

@@ -11,12 +11,12 @@ import javax.transaction.Transactional;
 
 import vn.kase.jee.common.ObjectMapper;
 import vn.kase.jee.jpa.entity.UserInfo;
-import vn.kase.jee.jsf.common.AbstractPersistenceBean;
+import vn.kase.jee.jsf.common.AbstractFacesBean;
 import vn.kase.jee.jsf.pojo.Course;
 
 @Named
 @RequestScoped
-public class CourseBean extends AbstractPersistenceBean {
+public class CourseBean extends AbstractFacesBean {
     private Course selectedCourse = new Course();
 
     @PostConstruct

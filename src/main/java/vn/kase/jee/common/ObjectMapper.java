@@ -14,6 +14,10 @@ public class ObjectMapper {
             for (Field df : destination.getDeclaredFields()) {
                 Field sf = source.getClass().getDeclaredField(df.getName());
 
+                if ("serialVersionUID".equals(df.getName()) || "serialVersionUID".equals(sf.getName())) {
+                    continue;
+                }
+
                 sf.setAccessible(true);
                 df.setAccessible(true);
 

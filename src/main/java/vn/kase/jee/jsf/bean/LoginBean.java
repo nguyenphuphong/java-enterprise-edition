@@ -7,12 +7,12 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
 import vn.kase.jee.jpa.entity.UserInfo;
-import vn.kase.jee.jsf.common.AbstractPersistenceBean;
+import vn.kase.jee.jsf.common.AbstractFacesBean;
 import vn.kase.jee.jsf.pojo.Session;
 
 @Named
 @RequestScoped
-public class LoginBean extends AbstractPersistenceBean {
+public class LoginBean extends AbstractFacesBean {
     private String email;
     private String password;
     private Integer roleId;

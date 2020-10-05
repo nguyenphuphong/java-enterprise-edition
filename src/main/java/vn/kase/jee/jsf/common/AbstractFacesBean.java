@@ -3,9 +3,10 @@ package vn.kase.jee.jsf.common;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
+import vn.kase.jee.jpa.common.AbstractPersistenceBean;
 import vn.kase.jee.jsf.pojo.Session;
 
-public abstract class AbstractFacesBean {
+public abstract class AbstractFacesBean extends AbstractPersistenceBean {
     protected Session getSession() {
         FacesContext context = FacesContext.getCurrentInstance();
 
