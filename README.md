@@ -220,3 +220,26 @@ Bên hệ thống JUNIOR sẻ lắng nghe thông báo này, và ghi lại thông
 
 Khi học sinh đăng nhập vào hệ thống JUNIOR, sẻ có một đường dẫn hiện thị kết quả mà hệ thống đã ghi nhận thống báo từ SENIOR trước đó.
 
+## Bài tập 5
+
+Trong bài tập này chúng ta sẻ làm quen với Job.
+
+Một tác vụ định thời (Cron Job), là một nghiệp vụ cho phép hệ thống lên lịch xử lý một tác vụ nào đấy tại một thời điểm nhất định nào đó trong ngày. 
+Với các bài tập trước đã làm chúng ta thấy rằng, việc thông báo cho JUNIOR biết kết quả ứng tuyển của một học sinh không cần thiết phải diễn ra ngay
+lập tức, chính vì vậy chúng ta có thể thiết lập cho SENIOR một tác vụ định thời để gửi thông báo tới tới JUNIOR.
+
+Để làm được điều này chúng ta cần thay đổi bảng (tb_application_student) như sau:
+
+(tb_application_student)
+
+- (application_id): khóa ngoại tới bảng (tb_application)
+- (student_id): khóa ngoại tới bảng (tb_student)
+- (passed): cờ để xác định học sinh này có trúng tuyển khối đăng kí hay không.
+- (reason): mô tả lý do trúng tuyển - điểm cao, học sinh giỏi cấp thành phố, con em dân tộc thiểu số ...
+- (sent_out): cờ để xác định thông tin này đã được gửi tới hệ thống JUNIOR
+
+Như vậy khi kết quả đã có cho bất kì học sinh nào, hệ thống SENIOR sẻ định thời (5 phút một lần) quét qua bảng (tb_application_student) để xem
+có học sinh nào cần gửi kết quả trúng tuyển hay không, nếu có hệ thống sẻ gửi thông báo và cập nhật lại bảng này. Khi quét như thế chúng ta thấy rằng
+không cần thiết một lần phải quét hết bảng này mà chỉ cần quyết một ít dữ liệu là đủ (pagination). Bằng cách định thời chạy lập đi lập lại như thế này
+hệ thống SENIOR không bị quá tải trong việc xử lý thông tin trúng tuyển của học sinh mà vẫn có thể cập nhật được kết quả tới hệ thống JUNIOR.
+
