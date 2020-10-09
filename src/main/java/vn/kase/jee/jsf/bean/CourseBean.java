@@ -6,11 +6,13 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.transaction.Transactional;
 
 import vn.kase.jee.common.ObjectMapper;
-import vn.kase.jee.jpa.entity.UserInfo;
+import vn.kase.jee.jms.pojo.CourseMessage;
+import vn.kase.jee.jms.producer.ICourseProducer;
 import vn.kase.jee.jsf.common.AbstractFacesBean;
 import vn.kase.jee.jsf.pojo.Course;
 
@@ -18,6 +20,9 @@ import vn.kase.jee.jsf.pojo.Course;
 @RequestScoped
 public class CourseBean extends AbstractFacesBean {
     private Course selectedCourse = new Course();
+
+    @Inject
+    private ICourseProducer producer;
 
     @PostConstruct
     public void intit() {
@@ -51,18 +56,27 @@ public class CourseBean extends AbstractFacesBean {
 
             entityManager.persist(beingSelectedCourse);
         } else {
-            vn.kase.jee.jpa.entity.Course course = new vn.kase.jee.jpa.entity.Course();
+            // vn.kase.jee.jpa.entity.Course course = new vn.kase.jee.jpa.entity.Course();
+            // course.setTitle(selectedCourse.getTitle());
+            // course.setDescription(selectedCourse.getDescription());
+
+            // Map<String, Object> parameters = new HashMap<>();
+            // parameters.put("email", getSession().getEmail());
+            // UserInfo info = findOne(UserInfo.class, "SELECT u FROM UserInfo u WHERE u.email = :email", parameters);
+            // course.setUser(info.getUser());
+
+            // entityManager.persist(course);
+            
+            // selectedCourse.setId(course.getId());
+
+            CourseMessage course = new CourseMessage();
             course.setTitle(selectedCourse.getTitle());
             course.setDescription(selectedCourse.getDescription());
+            course.setEmail(getSession().getEmail());
 
-            Map<String, Object> parameters = new HashMap<>();
-            parameters.put("email", getSession().getEmail());
-            UserInfo info = findOne(UserInfo.class, "SELECT u FROM UserInfo u WHERE u.email = :email", parameters);
-            course.setUser(info.getUser());
+            producer.send(course);
 
-            entityManager.persist(course);
-            
-            selectedCourse.setId(course.getId());
+            selectedCourse = new Course();
         }
     }
 

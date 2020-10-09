@@ -194,3 +194,29 @@ kí này sẻ được hệ thống JUNIOR liên kết với hệ thống SENIOR
 môn học, tại vì cơ bản hệ thống JUNIOR đã quản lí điểm cho học sinh đó rồi, nên khi xử lý yêu cầu dự tuyển, hệ thống JUNIOR sẻ tự động chuyển
 tiếp bảng điểm của học sinh lên thông tin dự tuyển cho học sinh đấy.
 
+## Bài tập 4
+
+Trong bài tập này chúng ta sẻ làm quen với việc sử dụng Mesage Brokers.
+
+Chúng ta sẻ tiếp tục bổ sung thêm tính năng cho hệ thống SENIOR trong qui trình tuyển sinh như sau. Tính năng cần thêm vào đó là,
+giáo vụ (warden) có thể đánh giấu một học sinh nào đấy là trúng tuyển trực tiếp, ví dụ: học sinh này đạt giải cao trong kì thi học sinh
+giỏi cấp thành phố chẳng hạn. Hoặc học bạ của bạn này có số điểm rất cao chẳng hạn.
+
+Như vậy chúng ta cần edit bảng (tb_application_student) để phục vụ cho việc đấy:
+
+(tb_application_student)
+
+- (application_id): khóa ngoại tới bảng (tb_application)
+- (student_id): khóa ngoại tới bảng (tb_student)
+- (passed): cờ để xác định học sinh này có trúng tuyển khối đăng kí hay không.
+- (reason): mô tả lý do trúng tuyển - điểm cao, học sinh giỏi cấp thành phố, con em dân tộc thiểu số ...
+
+Giáo vụ có thể đánh dấu một học sinh được trúng tuyển trong hệ thống SENIOR, tính năng này có thể được thực hiện trong trang (application-detail.xhtml)
+
+Tiếp theo, chúng ta cần thực hiện một tính năng liên kết. Tính năng liên kết này giúp hệ thống SENIOR có thể thông báo cho hệ thống JUNIOR biết
+được rằng một học sinh của họ - JUNIOR đã trúng tuyển vào trường cấp 3 - SENIOR đấy. Để làm được tính năng này chúng ta cần dùng tới Message Broker
+theo đó, sau khi giáo vụ đánh dấu rằng một học sinh đã được trúng tuyển trực tiếp trong hệ thống SENIOR sẻ xuất ra một thông báo thông qua Message Broker.
+Bên hệ thống JUNIOR sẻ lắng nghe thông báo này, và ghi lại thông tín đó trong cơ sở dữ liệu của JUNIOR.
+
+Khi học sinh đăng nhập vào hệ thống JUNIOR, sẻ có một đường dẫn hiện thị kết quả mà hệ thống đã ghi nhận thống báo từ SENIOR trước đó.
+
